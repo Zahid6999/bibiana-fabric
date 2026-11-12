@@ -1,4 +1,4 @@
-import { Sparkle } from 'lucide-react'
+import { Pause, Play, Sparkle } from 'lucide-react'
 import Image from 'next/image'
 
 import { cn } from '@/lib/cn'
@@ -28,29 +28,36 @@ export function Hero() {
 
       <div className="main-container">
         <div className="flex flex-col items-center text-center">
-          <p className="inline-flex animate-fade-up items-center gap-2 rounded-full border border-stroke-weak bg-white/70 px-4 py-2 text-tiny font-semibold text-accent backdrop-blur">
+          <p className="inline-flex items-center gap-2 rounded-full border border-stroke-weak bg-white/70 px-4 py-2 text-tiny font-semibold text-accent backdrop-blur">
             <Sparkle aria-hidden="true" className="size-4 fill-current" />
             {heroContent.badge}
           </p>
-          <p
-            lang="bn"
-            className="mt-4 animate-fade-up text-lead text-text-weak [animation-delay:60ms]"
-          >
+          <p lang="bn" className="mt-4 text-lead text-text-weak">
             {siteContent.taglineBangla}
           </p>
           <h1 id="hero-title" className="mt-4 font-display text-h1">
-            <span className="block animate-fade-up [animation-delay:120ms]">
-              {heroContent.titleLines[0]}
-            </span>
-            <span className="block animate-fade-up text-accent [animation-delay:220ms]">
-              {heroContent.titleLines[1]}
-            </span>
+            <span className="block">{heroContent.titleLines[0]}</span>
+            <span className="block text-accent">{heroContent.titleLines[1]}</span>
           </h1>
         </div>
       </div>
 
-      <div className="relative z-10 mt-8 -rotate-1 bg-text-strong py-4 text-white">
-        <div className="flex w-max animate-marquee motion-reduce:animate-none">
+      <div className="group/marquee relative z-10 mt-8 -rotate-1 bg-text-strong py-4 text-white">
+        <input
+          id="marquee-pause"
+          type="checkbox"
+          className="peer sr-only"
+          aria-label="Pause the moving text"
+        />
+        <label
+          htmlFor="marquee-pause"
+          className="absolute top-1/2 right-2 z-10 grid size-12 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-text-strong text-white ring-white/40 transition-colors peer-focus-visible:ring-2 hover:bg-white/10 peer-checked:[&_.icon-pause]:hidden [&_.icon-play]:hidden peer-checked:[&_.icon-play]:block"
+        >
+          <Pause aria-hidden="true" className="icon-pause size-4 fill-current" />
+          <Play aria-hidden="true" className="icon-play size-4 fill-current" />
+          <span className="sr-only">Pause or play the moving text</span>
+        </label>
+        <div className="flex w-max animate-marquee group-hover/marquee:[animation-play-state:paused] peer-checked:[animation-play-state:paused] motion-reduce:animate-none">
           {[0, 1].map((copy) => (
             <ul key={copy} aria-hidden={copy === 1} className="flex shrink-0 items-center">
               {heroContent.marquee.map((word) => (

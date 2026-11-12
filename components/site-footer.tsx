@@ -1,20 +1,15 @@
 'use client'
 
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SplitText } from 'gsap/SplitText'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { cn } from '@/lib/cn'
 import { siteContent } from '@/lib/content/site'
-import { prefersReducedMotion } from '@/lib/prefers-reduced-motion'
+import { buildExternalLinkProps } from '@/lib/external-link'
+import { fitWordmark, startFooterMotion } from '@/lib/footer-wordmark-motion'
 
 import logo from '@/public/images/bibiana-logo.jpg'
-
-gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText)
 
 const UNDERLINE =
   "relative after:pointer-events-none after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-out-expo after:content-[''] hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 motion-reduce:after:transition-none"
@@ -25,98 +20,38 @@ export function SiteFooter() {
   const markRef = useRef<HTMLParagraphElement>(null)
   const wordRef = useRef<HTMLSpanElement>(null)
 
-  useGSAP(
-    () => {
-      const root = rootRef.current
-      const box = boxRef.current
-      const mark = markRef.current
-      const word = wordRef.current
-      if (!root || !box || !mark || !word) return
+  useEffect(() => {
+    const root = rootRef.current
+    const box = boxRef.current
+    const mark = markRef.current
+    const word = wordRef.current
+    if (!root || !box || !mark || !word) return
 
-      const isReduced = prefersReducedMotion()
+    const targets = { root, box, mark, word }
+    const stopFit = fitWordmark(targets)
+    let stopMotion: (() => void) | null = null
+    let isAlive = true
 
-      let fittedFor = 0
-      const fit = () => {
-        const width = box.clientWidth
-        if (!width || width === fittedFor) return
-        fittedFor = width
-        mark.style.fontSize = ''
-        const size = Number.parseFloat(getComputedStyle(mark).fontSize)
-        const ink = word.offsetWidth
-        if (ink > 0) mark.style.fontSize = `${(size * width) / ink}px`
-      }
-      const observer = new ResizeObserver(fit)
-      observer.observe(box)
-      fit()
-
-      const entrance = isReduced
-        ? null
-        : gsap.fromTo(
-            root.querySelectorAll('[data-footer-rise]'),
-            { autoAlpha: 0, y: 48 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 1.1,
-              ease: 'expo.out',
-              stagger: 0.18,
-              scrollTrigger: {
-                trigger: root,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            },
-          )
-
-      if (!isReduced) gsap.set(word, { autoAlpha: 0 })
-
-      let split: SplitText | null = null
-      let reveal: gsap.core.Tween | null = null
-      let isAlive = true
-
-      const setup = () => {
-        if (!isAlive) return
-        fittedFor = 0
-        fit()
-        if (isReduced) return
-        split = SplitText.create(word, { type: 'chars', mask: 'chars', aria: 'none' })
-        reveal = gsap.fromTo(
-          split.chars,
-          { yPercent: 105 },
-          {
-            yPercent: 0,
-            duration: 1.6,
-            ease: 'power3.out',
-            stagger: 0.12,
-            scrollTrigger: {
-              trigger: box,
-              start: 'top 95%',
-              toggleActions: 'play none none reverse',
-            },
-          },
-        )
-        gsap.set(word, { autoAlpha: 1 })
-        fittedFor = 0
-        fit()
-        ScrollTrigger.refresh()
-      }
-
-      const timeout = new Promise((resolve) => setTimeout(resolve, 1500))
-      void Promise.race([document.fonts.ready, timeout]).then(setup)
-
-      return () => {
-        isAlive = false
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return
         observer.disconnect()
-        entrance?.scrollTrigger?.kill()
-        entrance?.kill()
-        reveal?.scrollTrigger?.kill()
-        reveal?.kill()
-        split?.revert()
-        mark.style.fontSize = ''
-      }
-    },
-    { scope: rootRef },
-  )
+        void startFooterMotion(targets).then((stop) => {
+          if (isAlive) stopMotion = stop
+          else stop()
+        })
+      },
+      { rootMargin: '0px 0px 600px 0px' },
+    )
+    observer.observe(root)
+
+    return () => {
+      isAlive = false
+      observer.disconnect()
+      stopMotion?.()
+      stopFit()
+    }
+  }, [])
 
   return (
     <footer
@@ -165,6 +100,7 @@ export function SiteFooter() {
                 <li key={link.id}>
                   <Link
                     href={link.href}
+                    {...buildExternalLinkProps(link.href)}
                     className={cn(
                       'group/link inline-flex min-h-12 items-center text-white/80 hover:text-white',
                       UNDERLINE,

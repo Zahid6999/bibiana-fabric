@@ -17,7 +17,6 @@
     "unrs-resolver"
   ],
   "dependencies": {
-    "@gsap/react": "^2.1.2",
     "@number-flow/react": "^0.6.2",
     "clsx": "^2.1.1",
     "gsap": "^3.15.1",

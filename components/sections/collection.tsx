@@ -36,6 +36,8 @@ export function Collection() {
                   siteContent.contact.whatsapp,
                   `Hello Bibiana, is the ${piece.name.toLowerCase()} available?`,
                 )}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group block"
               >
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-fill">

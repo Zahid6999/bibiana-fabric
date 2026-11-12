@@ -13,8 +13,8 @@ export const orderingContent = {
     },
     {
       id: 'receive',
-      title: 'Get it delivered',
-      body: 'Receive it at home, or try it on at an outlet near you.',
+      title: 'Pick it up or get it delivered',
+      body: 'Try it on at an outlet near you, or ask us about delivery to your area.',
     },
   ],
 } as const

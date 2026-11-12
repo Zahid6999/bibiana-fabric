@@ -1,3 +1,4 @@
+import { FloatingWhatsapp } from '@/components/floating-whatsapp'
 import { Collection } from '@/components/sections/collection'
 import { Hero } from '@/components/sections/hero'
 import { Ordering } from '@/components/sections/ordering'
@@ -22,6 +23,7 @@ export default function HomePage() {
         <Visit />
       </main>
       <SiteFooter />
+      <FloatingWhatsapp />
     </>
   )
 }

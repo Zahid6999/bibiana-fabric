@@ -46,6 +46,15 @@ export function Visit() {
                     {line}
                   </span>
                 ))}
+                <Link
+                  href={headOffice.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group link-tertiary text-small"
+                >
+                  <span className="underline-slide">Get directions</span>
+                  <span className="sr-only"> on Google Maps</span>
+                </Link>
               </span>
             </address>
 
@@ -63,6 +72,8 @@ export function Visit() {
                 <MessageCircle aria-hidden="true" className="size-5 shrink-0 text-text-weak" />
                 <Link
                   href={buildWhatsappHref(contact.whatsapp, contact.whatsappGreeting)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group link-tertiary font-normal"
                 >
                   <span className="underline-slide">WhatsApp {contact.whatsappDisplay}</span>

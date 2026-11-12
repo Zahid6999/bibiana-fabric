@@ -2,14 +2,16 @@ export const siteContent = {
   name: 'Bibiana',
   tagline: 'Our Tradition Our Pride',
   taglineBangla: 'আমাদের ঐতিহ্য, আমাদের গর্ব',
-  liveUrl: 'https://bibiana.com.bd',
   founded: 2001,
   description:
     'Bibiana is a leading fashion house based on handicraft and traditional hand embroidery and textile, with a vision to merge retail fashion with traditional craft.',
   headOffice: {
     label: 'Head office',
     lines: ['House 16, Road 13, Block G', 'Niketon, Gulshan 1', 'Dhaka 1212'],
+    mapsUrl:
+      'https://www.google.com/maps/search/?api=1&query=House+16+Road+13+Block+G+Niketon+Gulshan+1+Dhaka+1212',
   },
+  facebookReviews: { percent: 84, count: 25 },
   contact: {
     phone: '01714372165',
     phoneDisplay: '01714 372 165',

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { cn } from '@/lib/cn'
+import { buildExternalLinkProps } from '@/lib/external-link'
 
 import type { ComponentProps } from 'react'
 
@@ -41,6 +42,7 @@ export function SlideArrowLink({
   ...props
 }: SlideArrowLinkProps) {
   const styles = VARIANTS[variant]
+  const externalProps = typeof props.href === 'string' ? buildExternalLinkProps(props.href) : {}
 
   return (
     <Link
@@ -49,6 +51,7 @@ export function SlideArrowLink({
         styles.button,
         className,
       )}
+      {...externalProps}
       {...props}
     >
       <span className="block h-6 overflow-hidden">

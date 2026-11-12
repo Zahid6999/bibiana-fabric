@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import { recognitionContent } from '@/lib/content/recognition'
+import { siteContent } from '@/lib/content/site'
 
 import patchworkStreet from '@/public/images/patchwork-jacket-street.jpg'
 
@@ -36,6 +37,18 @@ export function Recognition() {
                 <li key={outlet}>{outlet}</li>
               ))}
             </ul>
+
+            <p className="mt-12 flex items-center gap-4 rounded-2xl border border-stroke-weak bg-fill p-6">
+              <span className="font-display text-h2 text-accent">
+                {siteContent.facebookReviews.percent}%
+              </span>
+              <span>
+                <span className="block font-semibold">recommend Bibiana on Facebook</span>
+                <span className="block text-small text-text-weak">
+                  Based on {siteContent.facebookReviews.count} reviews
+                </span>
+              </span>
+            </p>
           </div>
 
           <div className="lg:col-span-5 lg:col-start-8">

@@ -1,14 +1,9 @@
 'use client'
 
-import { useGSAP } from '@gsap/react'
 import NumberFlow, { type Format } from '@number-flow/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { prefersReducedMotion } from '@/lib/prefers-reduced-motion'
-
-gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 type NumberCounterProps = {
   readonly value: number
@@ -24,28 +19,26 @@ export function NumberCounter({ value, format, delay = 0, className }: NumberCou
   const [displayValue, setDisplayValue] = useState(value)
   const [isAnimated, setIsAnimated] = useState(false)
 
-  useGSAP(
-    () => {
-      const root = rootRef.current
-      if (!root || prefersReducedMotion()) return
-      setDisplayValue(0)
-      let startCall: gsap.core.Tween | null = null
-      const trigger = ScrollTrigger.create({
-        trigger: root,
-        start: 'top 90%',
-        once: true,
-        onEnter: () => {
-          setIsAnimated(true)
-          startCall = gsap.delayedCall(Math.max(delay, 0.05), () => setDisplayValue(value))
-        },
-      })
-      return () => {
-        startCall?.kill()
-        trigger.kill()
-      }
-    },
-    { scope: rootRef, dependencies: [value, delay] },
-  )
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || prefersReducedMotion()) return
+    setDisplayValue(0)
+    let timeout = 0
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return
+        observer.disconnect()
+        setIsAnimated(true)
+        timeout = window.setTimeout(() => setDisplayValue(value), Math.max(delay * 1000, 50))
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    )
+    observer.observe(root)
+    return () => {
+      observer.disconnect()
+      window.clearTimeout(timeout)
+    }
+  }, [value, delay])
 
   return (
     <span ref={rootRef} className={className}>

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/cn'
 import { heroContent } from '@/lib/content/hero'
 import { siteContent } from '@/lib/content/site'
-import { buildWhatsappHref } from '@/lib/whatsapp-href'
+import { buildMessengerHref } from '@/lib/messenger-href'
 
 import { NumberCounter } from '@/components/number-counter'
 import { SlideArrowLink } from '@/components/slide-arrow-link'
@@ -85,13 +85,10 @@ export function Hero() {
               <p className="mt-4 max-w-md text-white/90">{heroContent.panelBody}</p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <SlideArrowLink
-                  href={buildWhatsappHref(
-                    siteContent.contact.whatsapp,
-                    siteContent.contact.whatsappGreeting,
-                  )}
+                  href={buildMessengerHref(siteContent.contact.messageGreeting)}
                   variant="light"
                 >
-                  Order on WhatsApp
+                  Order on Messenger
                 </SlideArrowLink>
                 <SlideArrowLink href="#collection" scroll={false} variant="outline-light">
                   See the collection

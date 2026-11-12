@@ -1,10 +1,11 @@
 export const orderingContent = {
   title: 'How to order',
+  intro: 'Message us from your phone, or visit an outlet in Dhaka, Chattogram or Sylhet.',
   steps: [
     {
       id: 'message',
       title: 'Send us a message',
-      body: 'Share the piece you like on WhatsApp or Facebook.',
+      body: 'Share the piece you like on Facebook Messenger, or give us a call.',
     },
     {
       id: 'confirm',

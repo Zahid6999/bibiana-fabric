@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 import { outletsContent } from '@/lib/content/outlets'
 import { siteContent } from '@/lib/content/site'
+import { buildMessengerHref } from '@/lib/messenger-href'
 import { buildPhoneHref } from '@/lib/phone-href'
-import { buildWhatsappHref } from '@/lib/whatsapp-href'
 
 import { SlideArrowLink } from '@/components/slide-arrow-link'
 
@@ -69,14 +69,23 @@ export function Visit() {
                 </Link>
               </li>
               <li className="flex items-center gap-4">
+                <Phone aria-hidden="true" className="size-5 shrink-0 text-text-weak" />
+                <Link
+                  href={buildPhoneHref(contact.mobile)}
+                  className="group link-tertiary font-normal"
+                >
+                  <span className="underline-slide">{contact.mobileDisplay}</span>
+                </Link>
+              </li>
+              <li className="flex items-center gap-4">
                 <MessageCircle aria-hidden="true" className="size-5 shrink-0 text-text-weak" />
                 <Link
-                  href={buildWhatsappHref(contact.whatsapp, contact.whatsappGreeting)}
+                  href={buildMessengerHref(contact.messageGreeting)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group link-tertiary font-normal"
                 >
-                  <span className="underline-slide">WhatsApp {contact.whatsappDisplay}</span>
+                  <span className="underline-slide">Message us on Messenger</span>
                 </Link>
               </li>
               <li className="flex items-center gap-4">
@@ -91,10 +100,10 @@ export function Visit() {
             </ul>
 
             <SlideArrowLink
-              href={buildWhatsappHref(contact.whatsapp, contact.whatsappGreeting)}
+              href={buildMessengerHref(contact.messageGreeting)}
               className="mt-6 w-full justify-between"
             >
-              Order on WhatsApp
+              Order on Messenger
             </SlideArrowLink>
           </div>
         </div>

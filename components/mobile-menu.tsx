@@ -6,7 +6,7 @@ import { useEffect, useId, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { siteContent } from '@/lib/content/site'
-import { buildWhatsappHref } from '@/lib/whatsapp-href'
+import { buildMessengerHref } from '@/lib/messenger-href'
 
 import { SlideArrowLink } from '@/components/slide-arrow-link'
 
@@ -70,14 +70,11 @@ export function MobileMenu() {
                 </ul>
               </nav>
               <SlideArrowLink
-                href={buildWhatsappHref(
-                  siteContent.contact.whatsapp,
-                  siteContent.contact.whatsappGreeting,
-                )}
+                href={buildMessengerHref(siteContent.contact.messageGreeting)}
                 onClick={handleClose}
                 className="mt-auto w-full justify-between"
               >
-                Order on WhatsApp
+                Order on Messenger
               </SlideArrowLink>
             </div>,
             document.body,

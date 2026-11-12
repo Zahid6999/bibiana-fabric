@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { siteContent } from '@/lib/content/site'
-import { buildWhatsappHref } from '@/lib/whatsapp-href'
+import { buildMessengerHref } from '@/lib/messenger-href'
 
 import { MobileMenu } from '@/components/mobile-menu'
 import { SlideArrowLink } from '@/components/slide-arrow-link'
@@ -42,14 +42,11 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2">
             <SlideArrowLink
-              href={buildWhatsappHref(
-                siteContent.contact.whatsapp,
-                siteContent.contact.whatsappGreeting,
-              )}
+              href={buildMessengerHref(siteContent.contact.messageGreeting)}
               variant="secondary"
               className="hidden sm:inline-flex"
             >
-              Order on WhatsApp
+              Order on Messenger
             </SlideArrowLink>
             <MobileMenu />
           </div>

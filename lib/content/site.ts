@@ -15,10 +15,11 @@ export const siteContent = {
   contact: {
     phone: '01714372165',
     phoneDisplay: '01714 372 165',
-    whatsapp: '01749842891',
-    whatsappDisplay: '01749 842 891',
+    mobile: '01749842891',
+    mobileDisplay: '01749 842 891',
     email: 'bibianarupokar@gmail.com',
-    whatsappGreeting: 'Hello Bibiana, I would like to know more about your collection.',
+    messengerPage: 'bibiana2001',
+    messageGreeting: 'Hello Bibiana, I would like to know more about your collection.',
   },
   social: [
     { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/bibiana2001' },

@@ -1,6 +1,6 @@
 import { orderingContent } from '@/lib/content/ordering'
 import { siteContent } from '@/lib/content/site'
-import { buildWhatsappHref } from '@/lib/whatsapp-href'
+import { buildMessengerHref } from '@/lib/messenger-href'
 
 import { SlideArrowLink } from '@/components/slide-arrow-link'
 
@@ -13,17 +13,12 @@ export function Ordering() {
             <h2 id="ordering-title" className="font-display text-h2">
               {orderingContent.title}
             </h2>
-            <p className="mt-2 text-text-weak">
-              Order from anywhere in Bangladesh, straight from your phone.
-            </p>
+            <p className="mt-2 text-text-weak">{orderingContent.intro}</p>
             <SlideArrowLink
-              href={buildWhatsappHref(
-                siteContent.contact.whatsapp,
-                siteContent.contact.whatsappGreeting,
-              )}
+              href={buildMessengerHref(siteContent.contact.messageGreeting)}
               className="mt-8"
             >
-              Message us on WhatsApp
+              Message us on Messenger
             </SlideArrowLink>
           </div>
 

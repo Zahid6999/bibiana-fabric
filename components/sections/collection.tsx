@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { collectionContent } from '@/lib/content/collection'
 import { siteContent } from '@/lib/content/site'
-import { buildWhatsappHref } from '@/lib/whatsapp-href'
+import { buildMessengerHref } from '@/lib/messenger-href'
 
 import { SlideArrowLink } from '@/components/slide-arrow-link'
 
@@ -32,8 +32,7 @@ export function Collection() {
           {collectionContent.pieces.map((piece, index) => (
             <li key={piece.id} className="reveal">
               <Link
-                href={buildWhatsappHref(
-                  siteContent.contact.whatsapp,
+                href={buildMessengerHref(
                   `Hello Bibiana, is the ${piece.name.toLowerCase()} available?`,
                 )}
                 target="_blank"
@@ -62,7 +61,7 @@ export function Collection() {
                 <p className="mt-1 text-small text-text-weak">{piece.detail}</p>
                 <p className="mt-2 text-small font-semibold">
                   <span className="underline-slide">Ask about this piece</span>
-                  <span className="sr-only"> on WhatsApp</span>
+                  <span className="sr-only"> on Messenger</span>
                 </p>
               </Link>
             </li>

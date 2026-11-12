@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+@import 'lenis/dist/lenis.css';
+
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-background: #fffaf8;
+  --color-fill: #fff0eb;
+  --color-stroke-weak: #f4dcd4;
+  --color-stroke-strong: #b08a82;
+  --color-text-weak: #6b4f49;
+  --color-text-strong: #2a1714;
+  --color-brand: #ff0004;
+  --color-accent: #c8102e;
+  --color-accent-deep: #8c0b1f;
+  --color-accent-glow: #ff6a4d;
+
+  --text-tiny: 0.875rem;
+  --text-tiny--line-height: 1.25rem;
+  --text-small: 1rem;
+  --text-small--line-height: 1.5rem;
+  --text-body: 1.125rem;
+  --text-body--line-height: 1.75rem;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 2rem;
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.75rem;
+  --text-h3: 1.75rem;
+  --text-h3--line-height: 2rem;
+  --text-h2: clamp(2.75rem, 1.9rem + 3.4vw, 5rem);
+  --text-h2--line-height: 1;
+  --text-h2--letter-spacing: -0.005em;
+  --text-h1: clamp(4rem, 1.4rem + 10.6vw, 11.5rem);
+  --text-h1--line-height: 0.88;
+  --text-h1--letter-spacing: -0.01em;
+
+  --container-site: calc(1290px + 4rem);
+  --container-site-wide: calc(1440px + 4rem);
+  --container-prose: 40rem;
+
+  --shadow-raised: 0 1px 2px rgb(36 30 25 / 0.08), 0 2px 6px rgb(36 30 25 / 0.06);
+  --shadow-overlay: 0 12px 32px rgb(36 30 25 / 0.14);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-fade-up: fade-up 0.8s var(--ease-out-expo) both;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes marquee {
+    to {
+      translate: -50% 0;
+    }
+  }
+
+  @keyframes float {
+    50% {
+      translate: 0 -0.75rem;
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      translate: 0 1rem;
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-antonio);
+  --font-bangla: var(--font-hind-siliguri);
+}
+
+@utility main-container {
+  @apply mx-auto w-full max-w-site px-4 sm:px-6 lg:px-8 2xl:max-w-site-wide;
+}
+
+@utility stitch-mark {
+  height: 2px;
+  width: 2rem;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-brand) 0 6px,
+    transparent 6px 10px
+  );
+}
+
+@utility link-tertiary {
+  @apply inline-flex min-h-12 items-center gap-1 font-semibold text-text-strong;
+}
+
+@utility underline-slide {
+  padding-bottom: 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  box-decoration-break: clone;
+
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover,
+    :where(.group:hover, .group:focus-visible) & {
+      animation: underline-redraw 0.7s var(--ease-out-expo);
+    }
+  }
+}
+
+@utility underline-grow {
+  padding-bottom: 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.5s var(--ease-out-expo);
+
+  &:hover,
+  :where(.group:hover, .group:focus-visible) & {
+    background-position: 0 100%;
+    background-size: 100% 1px;
+  }
+}
+
+@keyframes underline-redraw {
+  0% {
+    background-position: 100% 100%;
+    background-size: 100% 1px;
+  }
+  45% {
+    background-position: 100% 100%;
+    background-size: 0% 1px;
+  }
+  46% {
+    background-position: 0 100%;
+    background-size: 0% 1px;
+  }
+  100% {
+    background-position: 0 100%;
+    background-size: 100% 1px;
+  }
+}
+
+@utility reveal {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 50%;
+    }
+  }
+}
+
+@layer base {
+  html {
+    @apply bg-background text-text-strong;
+  }
+
+  body {
+    @apply font-sans text-body antialiased;
+  }
+
+  .font-display {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-variant-numeric: lining-nums;
+  }
+
+  :lang(bn) {
+    @apply font-bangla;
+  }
+
+  ::selection {
+    @apply bg-text-strong text-white;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-text-strong;
+  }
+}
